@@ -36,10 +36,19 @@
   if (typewriter && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const phrases = [
       ['把复杂的事，', '写得清楚一点。'],
-      ['把微小的想法，', '做成真实作品。'],
-      ['把散落的灵感，', '连成一片星光。'],
-      ['把日常的噪音，', '留在屏幕之外。'],
-      ['把未完成的梦，', '慢慢写成答案。']
+      ['知名形而上学大师、游戏苦手、长片之王。', '创意无限！'],
+      ['梦想终将', '超越噩梦！'],
+      ['可以根号', '请勿平方！'],
+      ['用视频，摸你心……', 'Touch Your Heart With Videos！'],
+      ['MC短片皇帝。暂不进行非商务合作。', ''],
+      ['搞砸一个机会。', 'Give Fuck a chance.'],
+      ['关注我你将会知道宇宙的秘辛！', ''],
+      ['希望你能喜欢，', '今后我会越走越高~'],
+      ['你也可以叫我：', '诗仙酒神！'],
+      ['写标题时肆意妄为，视频时长捉摸不定。', '拖更属于正常现象，做自己想做的视频。'],
+      ['喜欢玩各种游戏~', '（吾不良引导）'],
+      ['粗鄙之语不成敬意，LF势VUP。', ''],
+      ['为了他人开心起来 所以一直奔跑', '卡其脱离太！']
     ];
     const lines = [...typewriter.querySelectorAll('[data-type-line]')];
     let phraseIndex = 0;
@@ -61,9 +70,25 @@
       while (next === phraseIndex) next = Math.floor(Math.random() * phrases.length);
       return next;
     };
+    const fitLine = (lineIndex, content) => {
+      const line = lines[lineIndex];
+      const currentContent = line.textContent;
+      line.style.fontSize = '';
+      line.textContent = content || '\u00a0';
+      const baseSize = parseFloat(getComputedStyle(typewriter).fontSize);
+      const availableWidth = typewriter.clientWidth - baseSize * .09;
+      const fittedSize = baseSize * Math.min(1, availableWidth / Math.max(line.scrollWidth, 1));
+      line.style.fontSize = `${fittedSize}px`;
+      line.textContent = currentContent;
+    };
+    const fitPhrase = phrase => {
+      fitLine(0, phrase[0]);
+      fitLine(1, phrase[1]);
+    };
     const typeLine = async (lineIndex, content) => {
       setActiveLine(lineIndex);
       const characters = Array.from(content);
+      fitLine(lineIndex, content);
       lines[lineIndex].textContent = '';
       for (const character of characters) {
         await waitUntilVisible();
@@ -82,6 +107,7 @@
       }
     };
     const runTypewriter = async () => {
+      fitPhrase(phrases[phraseIndex]);
       await wait(2200);
       while (true) {
         await deleteLine(1);
@@ -93,10 +119,11 @@
         await wait(jitter(120, 260));
         await typeLine(1, phrases[phraseIndex][1]);
         lines.forEach(line => line.classList.remove('is-active', 'is-deleting'));
-        typewriter.setAttribute('aria-label', phrases[phraseIndex].join(''));
+        typewriter.setAttribute('aria-label', phrases[phraseIndex].filter(Boolean).join(' '));
         await wait(jitter(2100, 3200));
       }
     };
+    addEventListener('resize', () => fitPhrase(phrases[phraseIndex]), { passive: true });
     runTypewriter();
   }
 
