@@ -32,6 +32,74 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  const typewriter = document.querySelector('[data-typewriter]');
+  if (typewriter && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const phrases = [
+      ['把复杂的事，', '写得清楚一点。'],
+      ['把微小的想法，', '做成真实作品。'],
+      ['把散落的灵感，', '连成一片星光。'],
+      ['把日常的噪音，', '留在屏幕之外。'],
+      ['把未完成的梦，', '慢慢写成答案。']
+    ];
+    const lines = [...typewriter.querySelectorAll('[data-type-line]')];
+    let phraseIndex = 0;
+
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+    const jitter = (min, max) => Math.round(min + Math.random() * (max - min));
+    const setActiveLine = (index, deleting = false) => {
+      lines.forEach((line, lineIndex) => {
+        line.classList.toggle('is-active', lineIndex === index);
+        line.classList.toggle('is-deleting', deleting && lineIndex === index);
+      });
+    };
+    const waitUntilVisible = async () => {
+      while (document.hidden) await wait(250);
+    };
+    const chooseNextPhrase = () => {
+      if (phrases.length < 2) return 0;
+      let next = phraseIndex;
+      while (next === phraseIndex) next = Math.floor(Math.random() * phrases.length);
+      return next;
+    };
+    const typeLine = async (lineIndex, content) => {
+      setActiveLine(lineIndex);
+      const characters = Array.from(content);
+      lines[lineIndex].textContent = '';
+      for (const character of characters) {
+        await waitUntilVisible();
+        lines[lineIndex].textContent += character;
+        await wait(jitter(72, 128));
+      }
+    };
+    const deleteLine = async lineIndex => {
+      setActiveLine(lineIndex, true);
+      const characters = Array.from(lines[lineIndex].textContent);
+      while (characters.length) {
+        await waitUntilVisible();
+        characters.pop();
+        lines[lineIndex].textContent = characters.join('');
+        await wait(jitter(32, 62));
+      }
+    };
+    const runTypewriter = async () => {
+      await wait(2200);
+      while (true) {
+        await deleteLine(1);
+        await wait(120);
+        await deleteLine(0);
+        phraseIndex = chooseNextPhrase();
+        await wait(jitter(260, 520));
+        await typeLine(0, phrases[phraseIndex][0]);
+        await wait(jitter(120, 260));
+        await typeLine(1, phrases[phraseIndex][1]);
+        lines.forEach(line => line.classList.remove('is-active', 'is-deleting'));
+        typewriter.setAttribute('aria-label', phrases[phraseIndex].join(''));
+        await wait(jitter(2100, 3200));
+      }
+    };
+    runTypewriter();
+  }
+
   const revealItems = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {

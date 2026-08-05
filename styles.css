@@ -66,6 +66,10 @@ button { color: inherit; font: inherit; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 12%, transparent); }
 .hero h1 { margin: 0; max-width: 900px; font: 760 clamp(3.9rem, 8.7vw, 7.4rem)/.89 var(--display); letter-spacing: -.075em; text-transform: uppercase; }
 .hero h1 em { color: var(--accent); font-family: var(--serif); font-weight: 400; text-transform: none; }
+.type-line { position: relative; display: inline; white-space: nowrap; }
+.type-line.is-active::after { content: ""; display: inline-block; width: .055em; height: .76em; margin-left: .07em; background: currentColor; transform: translateY(.03em); animation: type-caret .72s steps(1, end) infinite; }
+.type-line.is-deleting::after { animation-duration: .36s; }
+@keyframes type-caret { 50% { opacity: 0; } }
 .hero-lede { max-width: 570px; margin: 34px 0 0; color: var(--muted); font-size: clamp(1rem, 1.45vw, 1.18rem); }
 .hero-actions { display: flex; align-items: center; gap: 30px; margin-top: 38px; }
 .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-width: 180px; padding: 13px 16px 13px 20px; border: 1px solid var(--line); font-size: .8rem; font-weight: 700; }
@@ -229,4 +233,5 @@ button { color: inherit; font: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
+  .type-line::after { display: none !important; }
 }
