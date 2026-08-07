@@ -41,7 +41,8 @@
     };
     const loadSocialData = async () => {
       const hourlyCacheKey = Math.floor(Date.now() / 3600000);
-      const response = await fetch(`data/social.json?v=${hourlyCacheKey}`, { cache: 'no-store' });
+      const socialDataPath = socialRoot.dataset.socialPath || 'data/social.json';
+      const response = await fetch(`${socialDataPath}?v=${hourlyCacheKey}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`Social data request failed: ${response.status}`);
       const data = await response.json();
 
