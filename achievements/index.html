@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PaperEX 的成就之墙：账号成长、视频作品与开源项目。">
+  <meta name="theme-color" content="#11110f">
+  <title>成就之墙 · PaperEX</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('paperex-theme')||'dark'}catch(e){}</script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#achievement-wall">跳到成就之墙</a>
+  <header class="site-header article-header archive-header">
+    <a class="brand" href="../index.html" aria-label="返回 PaperEX 首页">
+      <span class="brand-mark" aria-hidden="true">P</span>
+      <span>PaperEX</span>
+    </a>
+    <a class="archive-home-link" href="../index.html#now">返回我的成就</a>
+    <div class="header-actions">
+      <button class="icon-button theme-toggle" type="button" aria-label="切换明暗主题" title="切换主题" data-theme-toggle>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="achievement-page" data-social-root data-social-path="../data/social.json">
+    <header class="achievement-hero reveal">
+      <div>
+        <p class="kicker">Achievement wall / Live</p>
+        <h1>成就<br>之墙</h1>
+      </div>
+      <div class="achievement-hero-copy">
+        <span class="achievement-live" data-social-status>每小时同步</span>
+        <p>把已经走过的路留下来。<br>小小的数字，也是一段真实的旅程。</p>
+      </div>
+    </header>
+
+    <section class="achievement-stats reveal" aria-label="实时成就数据">
+      <a class="achievement-stat" href="https://space.bilibili.com/9697888" target="_blank" rel="noreferrer">
+        <span>Bilibili</span>
+        <strong data-bilibili-followers>39,637</strong>
+        <small>位关注者 ↗</small>
+      </a>
+      <a class="achievement-stat" href="https://www.youtube.com/@%E7%BA%B8%E5%B7%BEPaper" target="_blank" rel="noreferrer">
+        <span>YouTube</span>
+        <strong data-youtube-subscribers>3,280</strong>
+        <small>位订阅者 ↗</small>
+      </a>
+      <div class="achievement-stat">
+        <span>Open source</span>
+        <strong>03</strong>
+        <small>个公开项目</small>
+      </div>
+    </section>
+
+    <section class="achievement-board" id="achievement-wall" aria-labelledby="achievement-board-title">
+      <header class="achievement-board-heading reveal">
+        <p class="kicker">Milestones / 04</p>
+        <h2 id="achievement-board-title">已经走过的路</h2>
+      </header>
+
+      <div class="achievement-grid">
+        <article class="achievement-plaque achievement-growth reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">01</span>
+          <span class="achievement-state"><i></i> 持续增长</span>
+          <div class="achievement-plaque-copy">
+            <p>Account operation</p>
+            <h3>双平台<br>创作者</h3>
+            <p>在 Bilibili 与 YouTube 持续创作，让每一次更新都有回声。</p>
+          </div>
+          <div class="achievement-orbit" aria-hidden="true"><span>B</span><span>Y</span></div>
+        </article>
+
+        <article class="achievement-plaque achievement-video-plaque reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">02</span>
+          <span class="achievement-state"><i></i> 最近更新</span>
+          <div class="achievement-plaque-copy">
+            <p>Video creation</p>
+            <h3>把长片，<br>认真做完</h3>
+          </div>
+          <a class="achievement-video" href="https://www.youtube.com/watch?v=GRUpMJj9LJo" target="_blank" rel="noreferrer" data-latest-video>
+            <span class="achievement-video-thumb"><img src="https://i.ytimg.com/vi/GRUpMJj9LJo/hqdefault.jpg" alt="我们被困「岩浆海」100天挑战，该如何生存？全集的视频封面" loading="lazy" data-latest-video-thumbnail></span>
+            <span><small>我最近的作品</small><strong data-latest-video-title>我们被困「岩浆海」100天挑战，该如何生存？全集</strong><em>前往 YouTube ↗</em></span>
+          </a>
+        </article>
+
+        <article class="achievement-plaque achievement-open-source reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">03</span>
+          <span class="achievement-state"><i></i> 已开源</span>
+          <div class="achievement-plaque-copy">
+            <p>Open source</p>
+            <h3>把想法，<br>变成工具</h3>
+            <p>三个公开项目，三种把好奇心落到现实里的方式。</p>
+          </div>
+          <nav class="achievement-project-list" aria-label="开源项目">
+            <a href="https://github.com/Old-Paper/mysterium-tarot" target="_blank" rel="noreferrer"><span>01</span><strong>Mysterium</strong><em>↗</em></a>
+            <a href="https://github.com/Old-Paper/eye-twitch-sundial" target="_blank" rel="noreferrer"><span>02</span><strong>眼跳时辰</strong><em>↗</em></a>
+            <a href="https://github.com/Old-Paper/UpLingo" target="_blank" rel="noreferrer"><span>03</span><strong>UpLingo</strong><em>↗</em></a>
+          </nav>
+        </article>
+
+        <article class="achievement-plaque achievement-future reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">04</span>
+          <span class="achievement-state"><i></i> 进行中</span>
+          <div class="achievement-future-mark" aria-hidden="true"><span>∞</span></div>
+          <div class="achievement-plaque-copy">
+            <p>Next milestone</p>
+            <h3>改变世界，<br><em>未完待续。</em></h3>
+            <p>下一项成就，还在路上。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer achievement-footer">
+    <div><a class="brand footer-brand" href="../index.html"><span class="brand-mark">P</span><span>PaperEX</span></a><p>每一步，都算数。</p></div>
+    <div class="footer-meta"><p>© <span data-year>2026</span> PaperEX</p><p>轻装构建 · 托管于 GitHub Pages</p></div>
+    <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
+  </footer>
+
+  <script src="../app.js" defer></script>
+</body>
+</html>
