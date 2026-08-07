@@ -300,6 +300,7 @@ button { color: inherit; font: inherit; }
   .section { padding-top: 150px; padding-bottom: 150px; }
   .playground { padding-left: clamp(36px, 4vw, 84px); padding-right: clamp(36px, 4vw, 84px); }
   .playground-intro, .project-links { max-width: none; }
+  .project-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .site-footer { min-height: 270px; padding-top: 70px; padding-bottom: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
