@@ -154,6 +154,8 @@ button { color: inherit; font: inherit; }
 .project-card:hover { transform: translateY(-5px); }
 .project-card.tarot { color: #efe9dd; background: #271b2f; }
 .project-card.sundial { color: #201710; background: #d7bd8b; }
+.project-card.uplingo { color: #edf4eb; background: radial-gradient(circle at 82% 14%, rgba(217,255,67,.16), transparent 34%), #111a15; }
+.project-card.uplingo::before { content: ""; position: absolute; inset: 0; opacity: .055; background-image: linear-gradient(rgba(237,244,235,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(237,244,235,.5) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; }
 .project-card::after { content: ""; position: absolute; inset: 10px; border: 1px solid currentColor; opacity: .18; pointer-events: none; }
 .project-top { display: flex; justify-content: space-between; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
 .project-top span:last-child { font-size: 1.2rem; transition: transform .25s; }
@@ -168,6 +170,21 @@ button { color: inherit; font: inherit; }
 .project-symbol.dial::before { width: 82%; border-color: rgba(32,23,16,.25); border-radius: 50%; transform: none; }
 .project-symbol.dial::after { width: 1px; height: 43%; background: #201710; border: 0; transform-origin: bottom; transform: translateY(-50%) rotate(28deg); }
 .project-symbol.dial span { width: 11px; height: 11px; border-radius: 50%; background: #201710; }
+.uplingo-widget { position: relative; z-index: 1; width: min(100%, 310px); margin: 18px auto 12px; padding: 16px; border: 1px solid rgba(217,255,67,.42); border-radius: 18px; background: rgba(6,12,8,.86); box-shadow: 11px 11px 0 rgba(217,255,67,.07); transform: rotate(-1.4deg); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+.project-card:hover .uplingo-widget { box-shadow: 7px 9px 0 rgba(217,255,67,.12); transform: rotate(0) translateY(-3px); }
+.uplingo-widget-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid rgba(237,244,235,.14); color: rgba(237,244,235,.52); font-size: .52rem; font-weight: 750; letter-spacing: .13em; }
+.uplingo-widget-bar::before { content: ""; width: 5px; height: 5px; margin-right: 18px; border-radius: 50%; background: #d9ff43; box-shadow: 9px 0 0 rgba(237,244,235,.22); }
+.uplingo-widget-bar span:first-child { margin-right: auto; }
+.uplingo-platforms { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 13px; }
+.uplingo-platforms span { padding: 3px 6px; border: 1px solid rgba(237,244,235,.16); border-radius: 999px; color: rgba(237,244,235,.68); font-size: .5rem; font-weight: 700; letter-spacing: .06em; }
+.uplingo-widget-title { display: block; margin-top: 15px; font: 760 clamp(1.55rem, 3vw, 2.15rem)/.88 var(--display); letter-spacing: -.055em; }
+.uplingo-widget-title em { color: #d9ff43; font-style: normal; }
+.uplingo-chart { display: block; width: 100%; height: 74px; margin-top: 4px; overflow: visible; }
+.uplingo-chart-grid { fill: none; stroke: rgba(237,244,235,.1); stroke-width: 1; }
+.uplingo-chart-line { fill: none; stroke: #d9ff43; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.uplingo-chart circle { fill: #d9ff43; filter: drop-shadow(0 0 5px rgba(217,255,67,.7)); }
+.uplingo-widget-meta { display: flex; justify-content: space-between; gap: 8px; color: rgba(237,244,235,.5); font-size: .5rem; letter-spacing: .04em; white-space: nowrap; }
+.uplingo-widget-meta span:last-child { color: #d9ff43; }
 
 .site-footer { max-width: var(--max); min-height: 230px; margin: 0 auto; padding: 55px 0; display: grid; grid-template-columns: 1fr auto auto; align-items: end; gap: 70px; }
 .site-footer p { margin: 12px 0 0; color: var(--muted); font-size: .72rem; }
