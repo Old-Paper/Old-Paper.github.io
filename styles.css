@@ -257,6 +257,7 @@ a.achievement-stat:hover { background: var(--surface); }
 .achievement-plaque { position: relative; min-height: 520px; padding: 34px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; background: var(--surface); }
 .achievement-growth, .achievement-future { grid-column: span 7; }
 .achievement-video-plaque, .achievement-open-source { grid-column: span 5; }
+.achievement-a-class { grid-column: 1 / -1; min-height: 540px; padding: 0; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(330px, .65fr); color: #f5efea; background: #190b0b; }
 .achievement-growth { color: var(--accent-ink); background: var(--accent); }
 .achievement-open-source { color: #efe9dd; background: #271b2f; }
 .achievement-future { background: var(--surface-2); }
@@ -281,6 +282,19 @@ a.achievement-stat:hover { background: var(--surface); }
 .achievement-video:hover img { transform: scale(1.045); }
 .achievement-video small, .achievement-video em { display: block; color: var(--muted); font-size: .57rem; font-style: normal; letter-spacing: .08em; text-transform: uppercase; }
 .achievement-video strong { display: -webkit-box; overflow: hidden; margin: 6px 0 10px; font-size: .78rem; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.achievement-a-media { position: relative; z-index: 2; min-width: 0; min-height: 540px; overflow: hidden; }
+.achievement-a-media::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(10,3,3,.76)); }
+.achievement-a-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.2,.8,.2,1), filter .55s; }
+.achievement-a-media > span { position: absolute; z-index: 2; left: 28px; bottom: 24px; padding-bottom: 3px; border-bottom: 1px solid rgba(255,255,255,.45); font-size: .65rem; font-weight: 700; letter-spacing: .06em; }
+.achievement-a-media:hover img { filter: brightness(1.08); transform: scale(1.025); }
+.achievement-a-copy { position: relative; z-index: 2; min-width: 0; padding: 35px; display: flex; flex-direction: column; justify-content: space-between; background: radial-gradient(circle at 100% 0, rgba(255,73,55,.2), transparent 35%); }
+.achievement-a-copy .achievement-state { color: rgba(245,239,234,.72); }
+.achievement-a-period { margin: 0 0 13px; color: rgba(245,239,234,.48); font-size: .61rem; font-weight: 750; letter-spacing: .13em; }
+.achievement-a-copy h3 { margin: 0; font: 750 clamp(2.7rem, 4.5vw, 4.6rem)/.86 var(--display); letter-spacing: -.07em; }
+.achievement-a-copy h3 em { color: #ff5e49; font: 400 .96em var(--serif); }
+.achievement-a-copy strong { display: block; margin-top: 22px; font: 650 1rem/1.45 var(--serif); }
+.achievement-a-copy p:last-child { margin: 15px 0 0; color: rgba(245,239,234,.58); font-size: .8rem; line-height: 1.75; }
+.achievement-a-class .achievement-plaque-index { z-index: 3; color: #f5efea; }
 .achievement-project-list { position: relative; z-index: 2; margin-top: 28px; border-top: 1px solid rgba(239,233,221,.2); }
 .achievement-project-list a { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid rgba(239,233,221,.2); transition: padding .2s, color .2s; }
 .achievement-project-list a:hover { color: #d9ff43; padding-left: 8px; }
@@ -330,6 +344,9 @@ a.achievement-stat:hover { background: var(--surface); }
   .achievement-hero { grid-template-columns: 1fr; gap: 38px; }
   .achievement-hero-copy { justify-self: start; }
   .achievement-growth, .achievement-future, .achievement-video-plaque, .achievement-open-source { grid-column: 1 / -1; }
+  .achievement-a-class { grid-template-columns: 1fr; }
+  .achievement-a-media { width: 100%; height: min(52vw, 420px); min-height: 0; aspect-ratio: auto; }
+  .achievement-a-copy { min-height: 420px; }
 }
 @media (max-width: 600px) {
   .hero, .section, .site-footer { margin-left: 18px; margin-right: 18px; }
@@ -384,6 +401,10 @@ a.achievement-stat:hover { background: var(--surface); }
   .achievement-video-plaque .achievement-plaque-copy { margin-top: 60px; }
   .achievement-video { grid-template-columns: 1fr; }
   .achievement-video strong { font-size: .86rem; }
+  .achievement-a-media { height: 220px; min-height: 0; }
+  .achievement-a-media > span { left: 18px; bottom: 16px; }
+  .achievement-a-copy { min-height: 420px; padding: 25px; }
+  .achievement-a-copy h3 { font-size: clamp(3rem, 16vw, 4.2rem); }
   .achievement-future-mark { width: 220px; }
 }
 @media (min-width: 851px) {
