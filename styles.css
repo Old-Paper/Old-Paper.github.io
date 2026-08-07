@@ -231,6 +231,14 @@ button { color: inherit; font: inherit; }
   .site-footer { grid-template-columns: 1fr auto; gap: 30px; }
   .footer-meta { grid-column: 1 / -1; grid-row: 2; text-align: left; }
 }
+@media (min-width: 851px) {
+  html { overflow-x: hidden; background: var(--bg); }
+  body { zoom: 1.5; width: 66.6667%; }
+  .site-header { padding-left: 32px; padding-right: 32px; }
+  .hero, .section, .site-footer { max-width: none; width: 100%; margin-left: 0; margin-right: 0; padding-left: 32px; padding-right: 32px; }
+  .playground { padding-left: 32px; padding-right: 32px; }
+  .playground-intro, .project-links { max-width: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
