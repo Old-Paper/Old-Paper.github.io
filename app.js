@@ -48,17 +48,18 @@
     const splitLongFirstLine = source => {
       const [first, ...rest] = source.split('|');
       const second = rest.join('|');
-      const characters = Array.from(first);
-      if (characters.length <= 12) return [first, second];
+      const firstCharacters = Array.from(first);
+      if (firstCharacters.length <= 12) return [first, second];
+      const characters = [...firstCharacters, ...Array.from(second)];
       const punctuation = new Set('，。！？；：、~…');
       const target = characters.length / 2;
       const candidates = characters
         .map((character, index) => punctuation.has(character) ? index + 1 : -1)
-        .filter(index => index >= 4 && index < characters.length - 1);
+        .filter(index => index >= 4 && index < characters.length - 3);
       const boundary = candidates.length
         ? candidates.reduce((best, index) => Math.abs(index - target) < Math.abs(best - target) ? index : best, candidates[0])
         : Math.round(target);
-      return [characters.slice(0, boundary).join(''), characters.slice(boundary).join('') + second];
+      return [characters.slice(0, boundary).join(''), characters.slice(boundary).join('')];
     };
     const phrases = phraseSources.map(splitLongFirstLine);
     const lines = [...typewriter.querySelectorAll('[data-type-line]')];

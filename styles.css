@@ -233,11 +233,21 @@ button { color: inherit; font: inherit; }
 }
 @media (min-width: 851px) {
   html { overflow-x: hidden; background: var(--bg); }
-  body { zoom: 1.5; width: 66.6667%; }
-  .site-header { padding-left: 32px; padding-right: 32px; }
-  .hero, .section, .site-footer { max-width: none; width: 100%; margin-left: 0; margin-right: 0; padding-left: 32px; padding-right: 32px; }
-  .playground { padding-left: 32px; padding-right: 32px; }
+  .site-header { height: 100px; padding-left: clamp(36px, 4vw, 84px); padding-right: clamp(36px, 4vw, 84px); }
+  .brand { font-size: .92rem; }
+  .brand-mark { width: 38px; height: 38px; font-size: 1.25rem; }
+  .nav { gap: 42px; font-size: .9rem; }
+  .icon-button { width: 48px; height: 48px; }
+  .hero, .section, .site-footer { max-width: none; width: 100%; margin-left: 0; margin-right: 0; padding-left: clamp(36px, 4vw, 84px); padding-right: clamp(36px, 4vw, 84px); }
+  .hero { min-height: 100svh; padding-top: 145px; padding-bottom: 58px; }
+  .hero-copy { width: min(1120px, 64%); }
+  .hero h1 { --hero-title-size: clamp(3.9rem, 5.2vw, 5.7rem); }
+  .hero-orbit { right: 4%; top: 18%; width: clamp(270px, 27vw, 430px); }
+  .hero-index { right: clamp(36px, 4vw, 84px); bottom: 58px; }
+  .section { padding-top: 150px; padding-bottom: 150px; }
+  .playground { padding-left: clamp(36px, 4vw, 84px); padding-right: clamp(36px, 4vw, 84px); }
   .playground-intro, .project-links { max-width: none; }
+  .site-footer { min-height: 270px; padding-top: 70px; padding-bottom: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
