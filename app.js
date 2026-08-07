@@ -32,6 +32,42 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  const socialRoot = document.querySelector('[data-social-root]');
+  if (socialRoot) {
+    const numberFormatter = new Intl.NumberFormat('zh-CN');
+    const setText = (selector, value) => {
+      const element = socialRoot.querySelector(selector);
+      if (element && value !== undefined && value !== null) element.textContent = value;
+    };
+    const loadSocialData = async () => {
+      const hourlyCacheKey = Math.floor(Date.now() / 3600000);
+      const response = await fetch(`data/social.json?v=${hourlyCacheKey}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Social data request failed: ${response.status}`);
+      const data = await response.json();
+
+      setText('[data-youtube-subscribers]', numberFormatter.format(data.youtube.subscribers));
+      setText('[data-bilibili-followers]', numberFormatter.format(data.bilibili.followers));
+      setText('[data-latest-video-title]', data.youtube.latestVideo.title);
+
+      const videoLink = socialRoot.querySelector('[data-latest-video]');
+      const videoThumbnail = socialRoot.querySelector('[data-latest-video-thumbnail]');
+      if (videoLink) videoLink.href = data.youtube.latestVideo.url;
+      if (videoThumbnail) {
+        videoThumbnail.src = data.youtube.latestVideo.thumbnail;
+        videoThumbnail.alt = `${data.youtube.latestVideo.title}的视频封面`;
+      }
+      const status = socialRoot.querySelector('[data-social-status]');
+      if (status) {
+        status.textContent = '每小时同步';
+        status.title = `数据更新于 ${new Date(data.updatedAt).toLocaleString('zh-CN')}`;
+      }
+    };
+    loadSocialData().catch(() => {
+      const status = socialRoot.querySelector('[data-social-status]');
+      if (status) status.textContent = '暂用缓存';
+    });
+  }
+
   const typewriter = document.querySelector('[data-typewriter]');
   if (typewriter && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const phraseSources = [
