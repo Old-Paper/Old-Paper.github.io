@@ -65,27 +65,6 @@
     const lines = [...typewriter.querySelectorAll('[data-type-line]')];
     let phraseIndex = 0;
 
-    const setPhraseDensity = phrase => {
-      typewriter.style.setProperty('--type-scale', '1');
-      if (!matchMedia('(max-width: 850px)').matches) return;
-
-      const probe = document.createElement('span');
-      probe.className = 'type-line';
-      probe.style.cssText = 'position:absolute; visibility:hidden; white-space:nowrap;';
-      typewriter.append(probe);
-      const widestLine = Math.max(...phrase.map(line => {
-        probe.textContent = line;
-        return probe.getBoundingClientRect().width;
-      }));
-      probe.remove();
-
-      const availableWidth = typewriter.clientWidth;
-      const scale = Math.min(1, (availableWidth * .96) / widestLine);
-      typewriter.style.setProperty('--type-scale', String(Math.max(.52, scale)));
-    };
-    setPhraseDensity(phrases[phraseIndex]);
-    addEventListener('resize', () => setPhraseDensity(phrases[phraseIndex]));
-
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     const jitter = (min, max) => Math.round(min + Math.random() * (max - min));
     const setActiveLine = (index, deleting = false) => {
@@ -130,7 +109,6 @@
         await wait(120);
         await deleteLine(0);
         phraseIndex = chooseNextPhrase();
-        setPhraseDensity(phrases[phraseIndex]);
         await wait(jitter(260, 520));
         await typeLine(0, phrases[phraseIndex][0]);
         await wait(jitter(120, 260));
