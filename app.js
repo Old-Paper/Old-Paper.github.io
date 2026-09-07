@@ -1,13 +1,15 @@
 (() => {
   const root = document.documentElement;
+  root.classList.add('js-enabled');
   const header = document.querySelector('[data-header]');
   const menuButton = document.querySelector('[data-menu-toggle]');
   const nav = document.querySelector('[data-nav]');
   const themeButton = document.querySelector('[data-theme-toggle]');
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 
   const syncThemeColor = () => {
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = root.dataset.theme === 'light' ? '#f2f0e8' : '#11110f';
+    if (meta) meta.content = getComputedStyle(root).getPropertyValue('--bg').trim();
   };
 
   themeButton?.addEventListener('click', () => {
@@ -17,16 +19,40 @@
   });
   syncThemeColor();
 
-  menuButton?.addEventListener('click', () => {
-    const open = menuButton.getAttribute('aria-expanded') === 'true';
-    menuButton.setAttribute('aria-expanded', String(!open));
-    menuButton.setAttribute('aria-label', open ? '打开菜单' : '关闭菜单');
-    nav?.classList.toggle('is-open', !open);
-  });
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('is-open');
-    menuButton?.setAttribute('aria-expanded', 'false');
-  }));
+  if (menuButton && nav) {
+    const isMobileMenu = () => getComputedStyle(menuButton).display !== 'none';
+    const setMenuOpen = (open, restoreFocus = false) => {
+      const mobile = isMobileMenu();
+      const expanded = mobile && open;
+      if (!expanded && (restoreFocus || nav.contains(document.activeElement))) {
+        menuButton.focus({ preventScroll: true });
+      }
+      menuButton.setAttribute('aria-expanded', String(expanded));
+      menuButton.setAttribute('aria-label', expanded ? '关闭菜单' : '打开菜单');
+      nav.classList.toggle('is-open', expanded);
+      nav.inert = mobile && !expanded;
+      if (mobile && !expanded) nav.setAttribute('aria-hidden', 'true');
+      else nav.removeAttribute('aria-hidden');
+    };
+    menuButton.addEventListener('click', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+    });
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setMenuOpen(false));
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false, true);
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!nav.contains(event.target) && !menuButton.contains(event.target)) setMenuOpen(false);
+    });
+    addEventListener('resize', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') === 'true');
+    }, { passive: true });
+    setMenuOpen(false);
+  }
 
   const onScroll = () => header?.classList.toggle('is-scrolled', scrollY > 16);
   addEventListener('scroll', onScroll, { passive: true });
@@ -70,7 +96,7 @@
   }
 
   const typewriter = document.querySelector('[data-typewriter]');
-  if (typewriter && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (typewriter) {
     const phraseSources = [
       '知名形而上学大师、游戏苦手、长片之王。|创意无限！',
       '梦想终将|超越噩梦！',
@@ -102,6 +128,58 @@
     const lines = [...typewriter.querySelectorAll('[data-type-line]')];
     let phraseIndex = 0;
 
+    // Measure every phrase in the real fonts, including its typing caret. One
+    // shared size keeps the title and the buttons still throughout the cycle.
+    const fitTitle = () => {
+      typewriter.style.removeProperty('--hero-fitted-size');
+      const availableWidth = typewriter.clientWidth;
+      const desiredSize = parseFloat(getComputedStyle(typewriter).fontSize);
+      if (!availableWidth || !desiredSize || lines.length !== 2) return;
+      let widestLine = 0;
+      lines.forEach((line, lineIndex) => {
+        const probe = line.cloneNode(false);
+        probe.removeAttribute('id');
+        probe.removeAttribute('data-type-line');
+        probe.classList.add('is-active');
+        probe.setAttribute('aria-hidden', 'true');
+        Object.assign(probe.style, {
+          position: 'absolute', visibility: 'hidden', pointerEvents: 'none',
+          top: '0', left: '0', width: 'max-content', maxWidth: 'none',
+          whiteSpace: 'nowrap', transition: 'none', animation: 'none'
+        });
+        typewriter.append(probe);
+        phrases.forEach(phrase => {
+          probe.textContent = phrase[lineIndex];
+          widestLine = Math.max(widestLine, probe.getBoundingClientRect().width);
+        });
+        probe.remove();
+      });
+      // Italic glyphs can paint slightly beyond their measured advance width.
+      const fittedSize = Math.min(desiredSize, desiredSize * (availableWidth - 4) / (widestLine + desiredSize * .12));
+      typewriter.style.setProperty('--hero-fitted-size', `${Math.floor(fittedSize * 100) / 100}px`);
+    };
+    let fitFrame = 0;
+    const scheduleFit = () => {
+      cancelAnimationFrame(fitFrame);
+      fitFrame = requestAnimationFrame(fitTitle);
+    };
+    fitTitle();
+    addEventListener('resize', scheduleFit, { passive: true });
+    if ('ResizeObserver' in window) {
+      let previousWidth = typewriter.clientWidth;
+      new ResizeObserver(() => {
+        const width = typewriter.clientWidth;
+        if (width !== previousWidth) {
+          previousWidth = width;
+          scheduleFit();
+        }
+      }).observe(typewriter);
+    }
+    document.fonts?.ready.then(scheduleFit);
+
+    lines.forEach((line, index) => { line.textContent = phrases[0][index]; });
+    typewriter.setAttribute('aria-label', phrases[0].filter(Boolean).join(' '));
+
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     const jitter = (min, max) => Math.round(min + Math.random() * (max - min));
     const setActiveLine = (index, deleting = false) => {
@@ -110,9 +188,27 @@
         line.classList.toggle('is-deleting', deleting && lineIndex === index);
       });
     };
-    const waitUntilVisible = async () => {
-      while (document.hidden) await wait(250);
+    let heroInView = true;
+    const activityWaiters = new Set();
+    const canAnimate = () => !document.hidden && heroInView && !motionPreference.matches;
+    const resumeAnimation = () => {
+      if (!canAnimate()) return;
+      activityWaiters.forEach(resolve => resolve());
+      activityWaiters.clear();
     };
+    const waitUntilVisible = () => canAnimate()
+      ? Promise.resolve()
+      : new Promise(resolve => activityWaiters.add(resolve));
+    if (!motionPreference.matches) {
+      document.addEventListener('visibilitychange', resumeAnimation);
+      motionPreference.addEventListener('change', resumeAnimation);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          heroInView = entries[0].isIntersecting;
+          resumeAnimation();
+        }).observe(typewriter);
+      }
+    }
     const chooseNextPhrase = () => {
       if (phrases.length < 2) return 0;
       let next = phraseIndex;
@@ -155,11 +251,12 @@
         await wait(jitter(2100, 3200));
       }
     };
-    runTypewriter();
+    if (!motionPreference.matches) runTypewriter();
   }
 
   const revealItems = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
+  if ('IntersectionObserver' in window && !motionPreference.matches) {
+    root.classList.add('js-motion');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -167,11 +264,8 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    }, { rootMargin: '0px 0px -4% 0px', threshold: .02 });
     revealItems.forEach(item => observer.observe(item));
-    // Keep content visible even when a browser restores a deep scroll position
-    // before IntersectionObserver has delivered its first entries.
-    setTimeout(() => revealItems.forEach(item => item.classList.add('is-visible')), 1200);
   } else {
     revealItems.forEach(item => item.classList.add('is-visible'));
   }

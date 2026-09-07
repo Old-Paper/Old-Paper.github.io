@@ -20,7 +20,7 @@
       <span class="brand-mark" aria-hidden="true">P</span>
       <span>PaperEX</span>
     </a>
-    <nav class="nav" aria-label="主导航" data-nav>
+    <nav class="nav" id="main-nav" aria-label="主导航" data-nav>
       <a href="#writing">文章</a>
       <a href="#now">成就</a>
       <a href="#about">关于</a>
@@ -30,7 +30,7 @@
       <button class="icon-button theme-toggle" type="button" aria-label="切换明暗主题" title="切换主题" data-theme-toggle>
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
       </button>
-      <button class="icon-button menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" data-menu-toggle>
+      <button class="icon-button menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="main-nav" data-menu-toggle>
         <span></span><span></span>
       </button>
     </div>
@@ -38,7 +38,11 @@
 
   <main id="content">
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero-orbit" aria-hidden="true"><span></span><i></i></div>
+      <div class="hero-masthead" aria-hidden="true">
+        <p class="hero-edition"><span>独立创作，持续生长。</span><span>A PERSONAL JOURNAL</span></p>
+        <p class="hero-signature">PAPER<span>EX</span><sup>✳</sup></p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true"><span></span><i></i><b>P</b><small>KEEP CREATING</small></div>
       <div class="hero-copy reveal">
         <p class="eyebrow"><span class="status-dot"></span> 一座持续生长的数字花园</p>
         <h1 id="hero-title" data-typewriter aria-label="知名形而上学大师、游戏苦手、长片之王。创意无限！">
@@ -52,13 +56,13 @@
         </div>
       </div>
       <div class="hero-index reveal" aria-label="博客主题">
-        <span>01 / 思考</span><span>02 / 构建</span><span>03 / 日常</span>
+        <span>创作 / 记录 / 构建</span><a href="#writing">向下探索 <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
     <section class="section writing" id="writing" aria-labelledby="writing-title">
       <div class="section-heading reveal">
-        <div><p class="kicker">Selected notes</p><h2 id="writing-title">最近写下的</h2></div>
+        <div><p class="kicker">01 / Selected notes</p><h2 id="writing-title">最近写下的<span class="section-period">。</span></h2></div>
         <a class="text-link all-articles-link" href="articles/index.html">查看所有文章 <span aria-hidden="true">→</span></a>
       </div>
 
@@ -100,7 +104,7 @@
 
     <section class="section now" id="now" aria-labelledby="now-title" data-social-root>
       <div class="section-heading reveal">
-        <div><p class="kicker">Achievements / Live</p><h2 id="now-title">我的成就</h2></div>
+        <div><p class="kicker">02 / Achievements</p><h2 id="now-title">我的成就<span class="section-period">。</span></h2></div>
         <a class="text-link achievement-wall-link" href="achievements/">进入成就之墙 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="now-list">
@@ -126,7 +130,7 @@
     <section class="section about" id="about" aria-labelledby="about-title">
       <div class="about-mark reveal" aria-hidden="true">P<span>×</span>E</div>
       <div class="about-copy reveal">
-        <p class="kicker">About me</p>
+        <p class="kicker">03 / About me</p>
         <h2 id="about-title">世界将因为你我，<br>变得更好。</h2>
         <p>我是 PaperEX，一个喜欢把想法变成作品的人。我关心设计如何减少噪音，也关心技术如何保留人的温度。</p>
         <div class="about-links" aria-label="个人主页">
@@ -139,8 +143,8 @@
 
     <section class="playground" id="playground" aria-labelledby="playground-title">
       <div class="playground-intro reveal">
-        <p class="kicker">Small experiments</p>
-        <h2 id="playground-title">这里是我做的一些小工具</h2>
+        <p class="kicker">04 / Small experiments</p>
+        <h2 id="playground-title">这里是我做的<span class="title-break">一些小工具<span class="section-period">。</span></span></h2>
         <p>均已在Github开源。</p>
       </div>
       <div class="project-links">
