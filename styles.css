@@ -789,3 +789,15 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
   .js-motion .reveal:not(.is-visible) { opacity: 1; transform: none; }
   .hero-orbit, .project-card, .uplingo-widget { animation: none; transition: none; }
 }
+
+/* Empty article states */
+.writing-empty { grid-column: 1 / -1; min-height: 250px; padding: clamp(26px,4vw,54px); display: flex; justify-content: space-between; align-items: end; gap: 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.writing-empty > span, .archive-empty > span { color: var(--accent); font: 400 clamp(4rem,10vw,7rem)/1 var(--serif); }
+.writing-empty p, .archive-empty p:first-child { margin: 0 0 10px; color: var(--muted); font-size: .64rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.writing-empty h3, .archive-empty h2 { margin: 0; font: 650 clamp(1.5rem,3.2vw,2.8rem)/1.35 var(--display); letter-spacing: -.04em; }
+.archive-empty { min-height: 270px; padding: clamp(30px,5vw,64px) 0; display: grid; grid-template-columns: minmax(100px,.35fr) 1fr; align-items: end; gap: 40px; border-bottom: 1px solid var(--line); }
+.archive-empty p:last-child { margin: 16px 0 0; color: var(--muted); font-size: .86rem; }
+@media (max-width: 600px) {
+  .writing-empty { min-height: 215px; padding: 26px 0; align-items: flex-start; flex-direction: column; }
+  .archive-empty { min-height: 230px; grid-template-columns: 1fr; gap: 25px; align-items: start; }
+}
