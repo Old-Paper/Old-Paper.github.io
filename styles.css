@@ -156,6 +156,8 @@ button { color: inherit; font: inherit; }
 .project-card.sundial { color: #201710; background: #d7bd8b; }
 .project-card.uplingo { color: #edf4eb; background: radial-gradient(circle at 82% 14%, rgba(217,255,67,.16), transparent 34%), #111a15; }
 .project-card.uplingo::before { content: ""; position: absolute; inset: 0; opacity: .055; background-image: linear-gradient(rgba(237,244,235,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(237,244,235,.5) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; }
+.project-card.review-sync { color: #f0f3ff; background: radial-gradient(circle at 78% 20%, rgba(105,255,222,.14), transparent 33%), radial-gradient(circle at 18% 78%, rgba(121,111,255,.19), transparent 36%), #111525; }
+.project-card.review-sync::before { content: ""; position: absolute; inset: 0; opacity: .06; background-image: linear-gradient(rgba(240,243,255,.42) 1px, transparent 1px), linear-gradient(90deg, rgba(240,243,255,.42) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
 .project-card::after { content: ""; position: absolute; inset: 10px; border: 1px solid currentColor; opacity: .18; pointer-events: none; }
 .project-top { display: flex; justify-content: space-between; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
 .project-top span:last-child { font-size: 1.2rem; transition: transform .25s; }
@@ -185,6 +187,27 @@ button { color: inherit; font: inherit; }
 .uplingo-chart circle { fill: #d9ff43; filter: drop-shadow(0 0 5px rgba(217,255,67,.7)); }
 .uplingo-widget-meta { display: flex; justify-content: space-between; gap: 8px; color: rgba(237,244,235,.5); font-size: .5rem; letter-spacing: .04em; white-space: nowrap; }
 .uplingo-widget-meta span:last-child { color: #d9ff43; }
+.review-console { position: relative; z-index: 1; width: min(100%, 390px); margin: 12px auto; padding: 14px; border: 1px solid rgba(143,255,229,.36); border-radius: 12px; background: rgba(7,10,20,.82); box-shadow: 8px 9px 0 rgba(108,99,255,.12); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+.project-card:hover .review-console { transform: translateY(-3px); box-shadow: 6px 7px 0 rgba(108,99,255,.2); }
+.review-console-bar, .review-actions { display: flex; align-items: center; justify-content: space-between; color: rgba(240,243,255,.52); font-size: .5rem; font-weight: 750; letter-spacing: .1em; }
+.review-console-bar { padding-bottom: 11px; border-bottom: 1px solid rgba(240,243,255,.11); }
+.review-console-bar span:first-child { display: flex; align-items: center; gap: 7px; }
+.review-console-bar i { width: 6px; height: 6px; border-radius: 50%; background: #8fffe5; box-shadow: 0 0 9px rgba(143,255,229,.8); }
+.review-player { position: relative; display: grid; place-items: center; min-height: 126px; margin: 12px 0 16px; overflow: hidden; border: 1px solid rgba(240,243,255,.09); border-radius: 7px; background: linear-gradient(145deg, rgba(108,99,255,.26), rgba(18,25,44,.2)), radial-gradient(circle at 68% 45%, rgba(143,255,229,.17), transparent 29%), #181e32; }
+.review-player::before, .review-player::after { content: ""; position: absolute; width: 54%; height: 1px; background: rgba(240,243,255,.1); transform: rotate(-27deg); }
+.review-player::after { width: 38%; transform: rotate(38deg); }
+.review-play { position: relative; z-index: 1; display: grid; place-items: center; width: 38px; height: 38px; padding-left: 2px; border: 1px solid rgba(143,255,229,.58); border-radius: 50%; color: #8fffe5; font-size: .72rem; background: rgba(7,10,20,.45); }
+.review-time { position: absolute; right: 8px; bottom: 7px; color: rgba(240,243,255,.52); font-size: .48rem; letter-spacing: .06em; }
+.review-timeline { position: relative; height: 12px; margin: 0 2px 14px; border-top: 2px solid rgba(240,243,255,.14); }
+.review-progress { position: absolute; top: -2px; left: 0; width: 53%; border-top: 2px solid #8fffe5; }
+.review-marker { position: absolute; top: -5px; left: 24%; width: 7px; height: 7px; border: 2px solid #111525; border-radius: 50%; background: #8fffe5; }
+.review-marker.marker-bad { left: 48%; background: #ff7085; }
+.review-marker.marker-late { left: 76%; }
+.review-actions { justify-content: flex-start; gap: 9px; letter-spacing: .06em; }
+.review-actions span { display: flex; align-items: center; gap: 5px; }
+.review-actions b { display: grid; place-items: center; min-width: 20px; height: 20px; border: 1px solid rgba(240,243,255,.19); border-radius: 4px; color: #f0f3ff; font-size: .52rem; }
+.review-actions span:nth-child(2) b { color: #ff8798; }
+.review-actions em { margin-left: auto; color: #8fffe5; font-style: normal; white-space: nowrap; }
 
 .site-footer { max-width: var(--max); min-height: 230px; margin: 0 auto; padding: 55px 0; display: grid; grid-template-columns: 1fr auto auto; align-items: end; gap: 70px; }
 .site-footer p { margin: 12px 0 0; color: var(--muted); font-size: .72rem; }
@@ -423,7 +446,7 @@ a.achievement-stat:hover { background: var(--surface); }
   .section { padding-top: 150px; padding-bottom: 150px; }
   .playground { padding-left: clamp(36px, 4vw, 84px); padding-right: clamp(36px, 4vw, 84px); }
   .playground-intro, .project-links { max-width: none; }
-  .project-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .project-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .site-footer { min-height: 270px; padding-top: 70px; padding-bottom: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -543,7 +566,7 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
 .playground-intro h2 { max-width: 800px; }
 .playground-intro > p:last-child { font-size: .78rem; margin-bottom: 7px; }
 .title-break { display: block; }
-.project-links { max-width: none; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+.project-links { max-width: none; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
 .project-card { min-width: 0; min-height: 460px; padding: 26px; gap: 22px; border-radius: 6px; }
 .project-card::after { inset: 9px; border-radius: 2px; }
 .project-top { gap: 15px; align-items: center; font-size: .64rem; }
@@ -557,6 +580,7 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
 .uplingo-platforms span, .uplingo-widget-meta { font-size: .54rem; }
 .uplingo-widget-bar::before { margin-right: 15px; }
 .uplingo-chart { height: 65px; margin-top: 10px; }
+.review-console { width: min(100%, 390px); margin: 4px auto; }
 .site-footer { min-height: 0; padding-top: 50px; padding-bottom: 45px; gap: 45px; border-top: 1px solid var(--line); }
 .site-footer p { line-height: 1.8; }
 .back-top { width: 42px; height: 42px; }
@@ -667,14 +691,14 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
   .about-mark { width: 100%; font-size: 4.8rem; }
   .about-copy h2 { font-size: 2rem; }
   .project-links { grid-template-columns: 1fr 1fr; }
-  .project-card.uplingo { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: end; min-height: 340px; }
-  .uplingo > .project-top { grid-column: 1; align-self: start; }
-  .uplingo-widget { grid-column: 2; grid-row: 1 / 3; width: min(95%, 280px); align-self: center; padding: 18px; }
-  .uplingo > div:last-child { grid-column: 1; }
+  .project-card.uplingo { grid-column: auto; display: flex; min-height: 430px; }
+  .uplingo-widget { width: min(100%, 280px); padding: 14px; }
   .project-card { padding: 26px; }
   .project-card h3 { font-size: 2.7rem; }
   .uplingo-widget-meta { font-size: .58rem; }
   .uplingo-widget-title { font-size: 1.7rem; }
+  .review-console { padding: 13px; }
+  .review-player { min-height: 112px; }
   .playground-intro { grid-template-columns: 1fr; }
   .achievement-growth, .achievement-video-plaque, .achievement-open-source, .achievement-future { grid-column: span 6; }
   .achievement-plaque { padding: 25px; min-height: 450px; gap: 30px; }
@@ -738,6 +762,7 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
   .project-symbol { width: 145px; }
   .project-symbol.dial { width: 185px; }
   .uplingo-widget { width: min(95%, 280px); margin: 8px auto; }
+  .review-console { width: min(95%, 320px); margin: 8px auto; }
   .site-footer { grid-template-columns: 1fr auto; gap: 25px; padding-top: 36px; padding-bottom: 30px; }
   .footer-meta { grid-column: 1 / -1; grid-row: 2; text-align: left; }
   .archive-header { grid-template-columns: 1fr auto; }
