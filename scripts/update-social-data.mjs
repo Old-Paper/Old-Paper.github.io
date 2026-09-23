@@ -105,12 +105,48 @@ const updateBilibili = async () => {
   };
 };
 
-const results = await Promise.allSettled([updateYouTube(), updateBilibili()]);
+const updateGitHub = async () => {
+  const username = process.env.GITHUB_USERNAME || previous.github?.username || 'Old-Paper';
+  const token = process.env.GITHUB_DATA_TOKEN;
+  const headers = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': 'PaperEX-GitHub-Pages-Updater/1.0'
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const repositories = [];
+  for (let page = 1; page <= 10; page += 1) {
+    const params = new URLSearchParams({
+      type: 'owner',
+      sort: 'full_name',
+      direction: 'asc',
+      per_page: '100',
+      page: String(page)
+    });
+    const batch = await fetchJson(`https://api.github.com/users/${encodeURIComponent(username)}/repos?${params}`, { headers });
+    if (!Array.isArray(batch)) throw new Error('GitHub returned an invalid repository list.');
+    repositories.push(...batch);
+    if (batch.length < 100) break;
+  }
+
+  const publicProjects = repositories.filter(repository => (
+    !repository.private && !repository.fork && !repository.archived
+  )).length;
+  next.github = {
+    username,
+    profileUrl: `https://github.com/${encodeURIComponent(username)}`,
+    repositoriesUrl: `https://github.com/${encodeURIComponent(username)}?tab=repositories`,
+    publicProjects
+  };
+};
+
+const results = await Promise.allSettled([updateYouTube(), updateBilibili(), updateGitHub()]);
 for (const result of results) {
   if (result.status === 'rejected') console.warn(result.reason?.message || result.reason);
 }
 
-const comparable = value => JSON.stringify({ youtube: value.youtube, bilibili: value.bilibili });
+const comparable = value => JSON.stringify({ youtube: value.youtube, bilibili: value.bilibili, github: value.github });
 next.updatedAt = comparable(next) === comparable(previous) ? previous.updatedAt : new Date().toISOString();
 await writeFile(outputUrl, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
-console.log(`Social data ready: YouTube ${next.youtube.subscribers}, Bilibili ${next.bilibili.followers}`);
+console.log(`Social data ready: YouTube ${next.youtube.subscribers}, Bilibili ${next.bilibili.followers}, GitHub ${next.github?.publicProjects ?? 'cached'}`);

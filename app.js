@@ -62,8 +62,10 @@
   if (socialRoot) {
     const numberFormatter = new Intl.NumberFormat('zh-CN');
     const setText = (selector, value) => {
-      const element = socialRoot.querySelector(selector);
-      if (element && value !== undefined && value !== null) element.textContent = value;
+      if (value === undefined || value === null) return;
+      socialRoot.querySelectorAll(selector).forEach(element => {
+        element.textContent = value;
+      });
     };
     const loadSocialData = async () => {
       const hourlyCacheKey = Math.floor(Date.now() / 3600000);
@@ -74,6 +76,7 @@
 
       setText('[data-youtube-subscribers]', numberFormatter.format(data.youtube.subscribers));
       setText('[data-bilibili-followers]', numberFormatter.format(data.bilibili.followers));
+      setText('[data-github-projects]', numberFormatter.format(data.github?.publicProjects));
       setText('[data-latest-video-title]', data.youtube.latestVideo.title);
 
       const videoLink = socialRoot.querySelector('[data-latest-video]');

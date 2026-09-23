@@ -32,6 +32,8 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           YOUTUBE_CHANNEL_HANDLE: '@纸巾Paper'
           BILIBILI_MID: '9697888'
+          GITHUB_DATA_TOKEN: ${{ github.token }}
+          GITHUB_USERNAME: 'Old-Paper'
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
