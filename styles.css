@@ -528,6 +528,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .hero h1 { --hero-title-size: clamp(2.8rem, 5.5vw, 5rem); width: 100%; max-width: none; height: calc(var(--hero-fitted-size, var(--hero-title-size)) * 2.5); font: 720 var(--hero-fitted-size, var(--hero-title-size))/1.2 var(--display); letter-spacing: -.035em; text-transform: none; }
 .type-line { line-height: 1.2; }
 .type-line[data-type-line="1"] { top: calc(var(--hero-fitted-size, var(--hero-title-size)) * 1.25); }
+.type-line.is-wrapped { width: 100%; max-width: 100%; white-space: normal; line-height: 1.14; }
 html:not(.js-enabled) .hero h1 { height: auto; }
 html:not(.js-enabled) .type-line { position: static; width: auto; white-space: normal; overflow-wrap: anywhere; }
 html:not(.js-enabled) .hero h1 > br { display: none; }

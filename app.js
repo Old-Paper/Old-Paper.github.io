@@ -105,68 +105,60 @@
       '梦想终将|超越噩梦！',
       '可以根号|请勿平方！',
       '用视频，摸你心……|Touch Your Heart With Videos！',
-      '搞砸一个机会。|Give Fuck a chance.',
+      '给爱一个机会。|Give love a chance.',
       '关注我你将会知道|宇宙的秘辛！',
-      '希望你能喜欢，|今后我会越走越高~',
       '你也可以叫我：|PaperEX',
-      '为了他人开心起来|所以一直奔跑'
+      '为了他人开心起来|所以一直奔跑',
+      '正在不断否定：|过去的自己。',
+      '穷不丧志，富不癫狂。|In poverty, lose not your resolve; in wealth, lose not your restraint.'
     ];
-    const splitLongFirstLine = source => {
+    const splitPhrase = source => {
       const [first, ...rest] = source.split('|');
-      const second = rest.join('|');
-      const firstCharacters = Array.from(first);
-      if (firstCharacters.length <= 12) return [first, second];
-      const characters = [...firstCharacters, ...Array.from(second)];
-      const punctuation = new Set('，。！？；：、~…');
-      const target = characters.length / 2;
-      const candidates = characters
-        .map((character, index) => punctuation.has(character) ? index + 1 : -1)
-        .filter(index => index >= 4 && index < characters.length - 3);
-      const boundary = candidates.length
-        ? candidates.reduce((best, index) => Math.abs(index - target) < Math.abs(best - target) ? index : best, candidates[0])
-        : Math.round(target);
-      return [characters.slice(0, boundary).join(''), characters.slice(boundary).join('')];
+      return [first, rest.join('|')];
     };
-    const phrases = phraseSources.map(splitLongFirstLine);
+    const phrases = phraseSources.map(splitPhrase);
     const lines = [...typewriter.querySelectorAll('[data-type-line]')];
     let phraseIndex = 0;
 
-    // Measure every phrase in the real fonts, including its typing caret. One
-    // shared size keeps the title and the buttons still throughout the cycle.
-    const fitTitle = () => {
-      typewriter.style.removeProperty('--hero-fitted-size');
-      const availableWidth = typewriter.clientWidth;
+    // Fit only the current phrase. Exceptionally long lines may wrap, so they
+    // do not force every short slogan to use a tiny shared font size.
+    const fitCurrentPhrase = () => {
+      const titleRect = typewriter.getBoundingClientRect();
+      const availableWidth = Math.max(typewriter.clientWidth, document.documentElement.clientWidth - titleRect.left - 18);
       const desiredSize = parseFloat(getComputedStyle(typewriter).fontSize);
       if (!availableWidth || !desiredSize || lines.length !== 2) return;
-      let widestLine = 0;
       lines.forEach((line, lineIndex) => {
+        line.style.removeProperty('font-size');
+        line.classList.remove('is-wrapped');
         const probe = line.cloneNode(false);
         probe.removeAttribute('id');
         probe.removeAttribute('data-type-line');
         probe.classList.add('is-active');
         probe.setAttribute('aria-hidden', 'true');
+        probe.textContent = phrases[phraseIndex][lineIndex];
         Object.assign(probe.style, {
           position: 'absolute', visibility: 'hidden', pointerEvents: 'none',
           top: '0', left: '0', width: 'max-content', maxWidth: 'none',
-          whiteSpace: 'nowrap', transition: 'none', animation: 'none'
+          whiteSpace: 'nowrap', transition: 'none', animation: 'none',
+          fontSize: `${desiredSize}px`
         });
         typewriter.append(probe);
-        phrases.forEach(phrase => {
-          probe.textContent = phrase[lineIndex];
-          widestLine = Math.max(widestLine, probe.getBoundingClientRect().width);
-        });
+        const measuredWidth = probe.getBoundingClientRect().width;
         probe.remove();
+        const singleLineSize = desiredSize * (availableWidth - 4) / (measuredWidth + desiredSize * .12);
+        const minimumSize = Math.max(12, desiredSize * .42);
+        const fittedSize = Math.min(desiredSize, Math.max(minimumSize, singleLineSize));
+        line.style.fontSize = `${Math.floor(fittedSize * 100) / 100}px`;
+        line.classList.toggle('is-wrapped', singleLineSize < minimumSize);
       });
-      // Italic glyphs can paint slightly beyond their measured advance width.
-      const fittedSize = Math.min(desiredSize, desiredSize * (availableWidth - 4) / (widestLine + desiredSize * .12));
-      typewriter.style.setProperty('--hero-fitted-size', `${Math.floor(fittedSize * 100) / 100}px`);
     };
     let fitFrame = 0;
     const scheduleFit = () => {
       cancelAnimationFrame(fitFrame);
-      fitFrame = requestAnimationFrame(fitTitle);
+      fitFrame = requestAnimationFrame(fitCurrentPhrase);
     };
-    fitTitle();
+    lines.forEach((line, index) => { line.textContent = phrases[0][index]; });
+    fitCurrentPhrase();
     addEventListener('resize', scheduleFit, { passive: true });
     if ('ResizeObserver' in window) {
       let previousWidth = typewriter.clientWidth;
@@ -180,7 +172,6 @@
     }
     document.fonts?.ready.then(scheduleFit);
 
-    lines.forEach((line, index) => { line.textContent = phrases[0][index]; });
     typewriter.setAttribute('aria-label', phrases[0].filter(Boolean).join(' '));
 
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -245,6 +236,7 @@
         await wait(120);
         await deleteLine(0);
         phraseIndex = chooseNextPhrase();
+        fitCurrentPhrase();
         await wait(jitter(260, 520));
         await typeLine(0, phrases[phraseIndex][0]);
         await wait(jitter(120, 260));
