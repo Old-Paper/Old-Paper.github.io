@@ -158,6 +158,8 @@ button { color: inherit; font: inherit; }
 .project-card.uplingo::before { content: ""; position: absolute; inset: 0; opacity: .055; background-image: linear-gradient(rgba(237,244,235,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(237,244,235,.5) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; }
 .project-card.review-sync { color: #f0f3ff; background: radial-gradient(circle at 78% 20%, rgba(105,255,222,.14), transparent 33%), radial-gradient(circle at 18% 78%, rgba(121,111,255,.19), transparent 36%), #111525; }
 .project-card.review-sync::before { content: ""; position: absolute; inset: 0; opacity: .06; background-image: linear-gradient(rgba(240,243,255,.42) 1px, transparent 1px), linear-gradient(90deg, rgba(240,243,255,.42) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
+.project-card.feedlab { grid-column: 1 / -1; color: #f8efee; background: radial-gradient(circle at 84% 12%, rgba(230,151,143,.22), transparent 28%), radial-gradient(circle at 13% 83%, rgba(121,49,46,.3), transparent 32%), #211314; }
+.project-card.feedlab::before { content: ""; position: absolute; inset: 0; opacity: .055; background-image: linear-gradient(rgba(248,239,238,.45) 1px, transparent 1px), linear-gradient(90deg, rgba(248,239,238,.45) 1px, transparent 1px); background-size: 34px 34px; pointer-events: none; }
 .project-card::after { content: ""; position: absolute; inset: 10px; border: 1px solid currentColor; opacity: .18; pointer-events: none; }
 .project-top { display: flex; justify-content: space-between; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
 .project-top span:last-child { font-size: 1.2rem; transition: transform .25s; }
@@ -208,6 +210,29 @@ button { color: inherit; font: inherit; }
 .review-actions b { display: grid; place-items: center; min-width: 20px; height: 20px; border: 1px solid rgba(240,243,255,.19); border-radius: 4px; color: #f0f3ff; font-size: .52rem; }
 .review-actions span:nth-child(2) b { color: #ff8798; }
 .review-actions em { margin-left: auto; color: #8fffe5; font-style: normal; white-space: nowrap; }
+.feedlab-board { position: relative; z-index: 1; width: min(100%, 760px); margin: 2px auto; padding: 14px; border: 1px solid rgba(230,151,143,.38); border-radius: 14px; background: rgba(13,7,8,.82); box-shadow: 9px 10px 0 rgba(230,151,143,.08); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
+.project-card:hover .feedlab-board { transform: translateY(-3px); box-shadow: 6px 7px 0 rgba(230,151,143,.15); }
+.feedlab-bar, .feedlab-scale { display: flex; align-items: center; color: rgba(248,239,238,.5); font-size: .52rem; font-weight: 750; letter-spacing: .1em; }
+.feedlab-bar { justify-content: space-between; padding-bottom: 11px; border-bottom: 1px solid rgba(248,239,238,.12); }
+.feedlab-bar span:first-child { display: flex; align-items: center; gap: 7px; }
+.feedlab-bar i { width: 6px; height: 6px; border-radius: 50%; background: #e6978f; box-shadow: 0 0 9px rgba(230,151,143,.75); }
+.feedlab-compare { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: 13px; align-items: center; margin: 14px 0; }
+.feedlab-cover { position: relative; aspect-ratio: 16 / 7.7; min-height: 0; overflow: hidden; padding: clamp(12px,2vw,22px); display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid rgba(248,239,238,.12); border-radius: 8px; isolation: isolate; }
+.feedlab-cover::before, .feedlab-cover::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; }
+.feedlab-cover-a { background: linear-gradient(140deg, #5f2929 0 48%, #c97872 48% 100%); }
+.feedlab-cover-a::before { width: 46%; aspect-ratio: 1; top: -32%; right: 8%; border: 1px solid rgba(255,255,255,.36); box-shadow: 0 0 0 22px rgba(255,255,255,.06), 0 0 0 48px rgba(255,255,255,.04); }
+.feedlab-cover-a::after { width: 38%; aspect-ratio: 1; right: -9%; bottom: -42%; background: #f0c0ba; }
+.feedlab-cover-b { color: #261314; background: linear-gradient(115deg, #f2d1cc 0 62%, #e6978f 62% 100%); }
+.feedlab-cover-b::before { width: 42%; aspect-ratio: 1; top: 9%; right: 8%; border: 1px solid rgba(38,19,20,.22); box-shadow: 0 0 0 18px rgba(38,19,20,.035); }
+.feedlab-cover-b::after { width: 13%; aspect-ratio: 1; right: 22%; top: 38%; background: #7d3735; }
+.feedlab-cover strong { font: 760 clamp(.95rem,2.2vw,1.75rem)/1.02 var(--display); letter-spacing: -.04em; }
+.feedlab-cover small { margin-top: 5px; font-size: .5rem; letter-spacing: .12em; opacity: .62; }
+.feedlab-label { position: absolute; top: 9px; left: 10px; display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid currentColor; border-radius: 50%; font-size: .56rem; font-weight: 800; }
+.feedlab-versus { color: #e6978f; font: 700 .58rem/1 var(--sans); letter-spacing: .08em; writing-mode: vertical-rl; }
+.feedlab-scale { gap: 7px; padding-top: 1px; }
+.feedlab-scale i { width: 5px; height: 5px; border-radius: 50%; background: rgba(248,239,238,.18); }
+.feedlab-scale i:first-of-type { background: #e6978f; box-shadow: 0 0 6px rgba(230,151,143,.65); }
+.feedlab-scale em { margin-left: auto; color: #e6978f; font-style: normal; }
 
 .site-footer { max-width: var(--max); min-height: 230px; margin: 0 auto; padding: 55px 0; display: grid; grid-template-columns: 1fr auto auto; align-items: end; gap: 70px; }
 .site-footer p { margin: 12px 0 0; color: var(--muted); font-size: .72rem; }
@@ -601,6 +626,7 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
 .uplingo-widget-bar::before { margin-right: 15px; }
 .uplingo-chart { height: 65px; margin-top: 10px; }
 .review-console { width: min(100%, 390px); margin: 4px auto; }
+.feedlab-board { width: min(100%, 760px); margin: 4px auto; }
 .site-footer { min-height: 0; padding-top: 50px; padding-bottom: 45px; gap: 45px; border-top: 1px solid var(--line); }
 .site-footer p { line-height: 1.8; }
 .back-top { width: 42px; height: 42px; }
@@ -785,6 +811,15 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
   .project-symbol.dial { width: 185px; }
   .uplingo-widget { width: min(95%, 280px); margin: 8px auto; }
   .review-console { width: min(95%, 320px); margin: 8px auto; }
+  .project-card.feedlab { grid-column: auto; }
+  .feedlab-board { width: min(100%, 420px); margin: 8px auto; padding: 11px; }
+  .feedlab-bar span:last-child { display: none; }
+  .feedlab-compare { gap: 7px; margin: 11px 0; }
+  .feedlab-cover { aspect-ratio: 4 / 3; padding: 10px; border-radius: 6px; }
+  .feedlab-cover strong { font-size: clamp(.72rem,4vw,1rem); }
+  .feedlab-cover small { display: none; }
+  .feedlab-label { top: 7px; left: 7px; width: 19px; height: 19px; font-size: .48rem; }
+  .feedlab-versus { font-size: .48rem; }
   .site-footer { grid-template-columns: 1fr auto; gap: 25px; padding-top: 36px; padding-bottom: 30px; }
   .footer-meta { grid-column: 1 / -1; grid-row: 2; text-align: left; }
   .archive-header { grid-template-columns: 1fr auto; }

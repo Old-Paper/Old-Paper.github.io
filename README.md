@@ -9,7 +9,7 @@ PaperEX 的零依赖静态个人博客，面向 GitHub Pages 构建。
 - 首页展示最近三篇文章，并提供按时间倒序排列的全部文章页；没有文章时显示空状态
 - 独立成就之墙展示实时账号数据、最新作品与开源项目
 - 成就区每小时同步 YouTube 订阅数、最新视频、Bilibili 关注数和 GitHub 公开项目数
-- 底部集成 Mysterium 塔罗、眼跳时辰日晷、主播邻国 UpLingo 与联动审核 Review Sync
+- 底部集成 Mysterium 塔罗、眼跳时辰日晷、主播邻国 UpLingo、联动审核 Review Sync 与封面测试 FeedLab
 
 ## 本地预览
 
