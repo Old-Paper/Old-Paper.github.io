@@ -225,8 +225,6 @@ button { color: inherit; font: inherit; }
 .feedlab-cover-b { color: #261314; background: linear-gradient(115deg, #f2d1cc 0 62%, #e6978f 62% 100%); }
 .feedlab-cover-b::before { width: 42%; aspect-ratio: 1; top: 9%; right: 8%; border: 1px solid rgba(38,19,20,.22); box-shadow: 0 0 0 18px rgba(38,19,20,.035); }
 .feedlab-cover-b::after { width: 13%; aspect-ratio: 1; right: 22%; top: 38%; background: #7d3735; }
-.feedlab-cover strong { font: 760 clamp(.95rem,2.2vw,1.75rem)/1.02 var(--display); letter-spacing: -.04em; }
-.feedlab-cover small { margin-top: 5px; font-size: .5rem; letter-spacing: .12em; opacity: .62; }
 .feedlab-label { position: absolute; top: 9px; left: 10px; display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid currentColor; border-radius: 50%; font-size: .56rem; font-weight: 800; }
 .feedlab-versus { color: #e6978f; font: 700 .58rem/1 var(--sans); letter-spacing: .08em; writing-mode: vertical-rl; }
 .feedlab-scale { gap: 7px; padding-top: 1px; }
@@ -816,8 +814,6 @@ html:not(.js-enabled) .hero h1 > br { display: none; }
   .feedlab-bar span:last-child { display: none; }
   .feedlab-compare { gap: 7px; margin: 11px 0; }
   .feedlab-cover { aspect-ratio: 4 / 3; padding: 10px; border-radius: 6px; }
-  .feedlab-cover strong { font-size: clamp(.72rem,4vw,1rem); }
-  .feedlab-cover small { display: none; }
   .feedlab-label { top: 7px; left: 7px; width: 19px; height: 19px; font-size: .48rem; }
   .feedlab-versus { font-size: .48rem; }
   .site-footer { grid-template-columns: 1fr auto; gap: 25px; padding-top: 36px; padding-bottom: 30px; }
