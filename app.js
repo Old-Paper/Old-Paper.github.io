@@ -301,7 +301,7 @@
       playButton.querySelector('span').textContent = audio.paused ? '▶' : 'Ⅱ';
       playButton.setAttribute('aria-label', audio.paused ? '播放' : '暂停');
     };
-    tracks.forEach(track => track.addEventListener('click', async () => {
+    const selectTrack = async (track, autoplay = false) => {
       const source = track.dataset.ostSrc;
       if (!source) return;
       if (audio.getAttribute('src') !== source) {
@@ -309,11 +309,14 @@
         title.textContent = track.dataset.ostTitle || track.textContent.trim();
         playButton.disabled = false;
         progress.disabled = false;
-        tracks.forEach(item => item.classList.toggle('is-playing', item === track));
+        tracks.forEach(item => item.classList.toggle('is-active', item === track));
       }
-      try { await audio.play(); } catch (error) {}
+      if (autoplay) {
+        try { await audio.play(); } catch (error) {}
+      }
       syncPlayer();
-    }));
+    };
+    tracks.forEach(track => track.addEventListener('click', () => selectTrack(track, true)));
     playButton.addEventListener('click', () => {
       if (!audio.src) return;
       if (audio.paused) audio.play().catch(() => {});
@@ -327,6 +330,7 @@
     audio.addEventListener('play', syncPlayer);
     audio.addEventListener('pause', syncPlayer);
     audio.addEventListener('ended', syncPlayer);
+    if (tracks.length) selectTrack(tracks[0]);
   }
 
   const year = document.querySelector('[data-year]');
