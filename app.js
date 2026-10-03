@@ -280,6 +280,55 @@
     if (emptyState) emptyState.hidden = visible !== 0;
   }));
 
+  const ostPlayer = document.querySelector('[data-ost-player]');
+  if (ostPlayer) {
+    const audio = ostPlayer.querySelector('[data-ost-audio]');
+    const playButton = ostPlayer.querySelector('[data-ost-play]');
+    const progress = ostPlayer.querySelector('[data-ost-progress]');
+    const title = ostPlayer.querySelector('[data-ost-title]');
+    const time = ostPlayer.querySelector('[data-ost-time]');
+    const tracks = document.querySelectorAll('[data-ost-track]');
+    const formatTime = seconds => {
+      if (!Number.isFinite(seconds)) return '00:00';
+      const minutes = Math.floor(seconds / 60);
+      const remainder = Math.floor(seconds % 60);
+      return `${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
+    };
+    const syncPlayer = () => {
+      const duration = audio.duration || 0;
+      progress.value = duration ? String((audio.currentTime / duration) * 100) : '0';
+      time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(duration)}`;
+      playButton.querySelector('span').textContent = audio.paused ? '▶' : 'Ⅱ';
+      playButton.setAttribute('aria-label', audio.paused ? '播放' : '暂停');
+    };
+    tracks.forEach(track => track.addEventListener('click', async () => {
+      const source = track.dataset.ostSrc;
+      if (!source) return;
+      if (audio.getAttribute('src') !== source) {
+        audio.src = source;
+        title.textContent = track.dataset.ostTitle || track.textContent.trim();
+        playButton.disabled = false;
+        progress.disabled = false;
+        tracks.forEach(item => item.classList.toggle('is-playing', item === track));
+      }
+      try { await audio.play(); } catch (error) {}
+      syncPlayer();
+    }));
+    playButton.addEventListener('click', () => {
+      if (!audio.src) return;
+      if (audio.paused) audio.play().catch(() => {});
+      else audio.pause();
+    });
+    progress.addEventListener('input', () => {
+      if (audio.duration) audio.currentTime = audio.duration * Number(progress.value) / 100;
+    });
+    audio.addEventListener('timeupdate', syncPlayer);
+    audio.addEventListener('loadedmetadata', syncPlayer);
+    audio.addEventListener('play', syncPlayer);
+    audio.addEventListener('pause', syncPlayer);
+    audio.addEventListener('ended', syncPlayer);
+  }
+
   const year = document.querySelector('[data-year]');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
