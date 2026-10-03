@@ -31,48 +31,37 @@
   <main class="ost-page">
     <header class="ost-hero reveal">
       <div>
-        <p class="kicker">Original soundtracks / 01</p>
+        <p class="kicker">PaperEX / Music</p>
         <h1>OST<span class="section-period">。</span></h1>
       </div>
-      <p class="ost-summary">按视频归档，<br>为每个故事留下它的声音。</p>
+      <p class="ost-summary">视频原声带<span>1 个专辑 · 1 首音乐</span></p>
     </header>
 
     <section class="ost-catalog" id="ost-catalog" aria-labelledby="ost-catalog-title">
-      <header class="ost-catalog-heading reveal">
-        <p class="kicker">Video collections</p>
-        <h2 id="ost-catalog-title">视频原声带</h2>
-        <span>01 个分类</span>
-      </header>
-
-      <article class="ost-collection reveal" id="universal-ai-girlfriend">
+      <article class="ost-collection reveal" id="universal-ai-girlfriend" aria-labelledby="ost-catalog-title">
         <div class="ost-collection-copy">
-          <div class="ost-collection-meta">
-            <span>Collection 01</span>
-            <span><i></i> 01 首曲目</span>
-          </div>
-          <div>
-            <p>Video original soundtrack</p>
-            <h2>《万能人机女友》<span>视频原声带</span></h2>
-            <p class="ost-collection-note">点击播放，在这里听见这个故事。</p>
+          <header class="ost-album-heading">
+            <div><p>01 / 原声带</p><h2 id="ost-catalog-title">万能人机女友</h2></div>
+            <span>1 首 · 02:39</span>
+          </header>
+          <div class="ost-track-list" aria-label="《万能人机女友》原声带曲目">
+            <button class="ost-track" type="button" data-ost-track data-ost-src="assets/she-is-real-to-me.mp3" data-ost-title="She Is Real To Me">
+              <span class="ost-track-index">01</span>
+              <img src="assets/she-is-real-to-me.png" alt="" aria-hidden="true">
+              <span class="ost-track-copy"><strong>She Is Real To Me</strong><small>PaperEX</small></span>
+              <time datetime="PT2M39S">02:39</time>
+              <span class="ost-track-play" aria-hidden="true">▶</span>
+            </button>
           </div>
           <div class="ost-player" data-ost-player aria-label="OST 音乐播放器">
             <audio data-ost-audio preload="metadata"></audio>
             <button type="button" data-ost-play aria-label="播放" disabled><span aria-hidden="true">▶</span></button>
             <div class="ost-player-copy">
-              <span>Now playing</span>
+              <span>当前曲目</span>
               <strong data-ost-title>等待曲目</strong>
             </div>
             <input type="range" min="0" max="100" value="0" step="0.1" aria-label="播放进度" data-ost-progress disabled>
             <time data-ost-time>00:00 / 00:00</time>
-          </div>
-          <div class="ost-track-list" aria-label="《万能人机女友》原声带曲目">
-            <button class="ost-track" type="button" data-ost-track data-ost-src="assets/she-is-real-to-me.mp3" data-ost-title="She Is Real To Me">
-              <span class="ost-track-index">01</span>
-              <img src="assets/she-is-real-to-me.png" alt="" aria-hidden="true">
-              <span class="ost-track-copy"><strong>She Is Real To Me</strong><small>Original soundtrack</small></span>
-              <time datetime="PT2M39S">02:39</time>
-              <span class="ost-track-play" aria-hidden="true">▶</span>
-            </button>
           </div>
         </div>
       </article>
