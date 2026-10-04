@@ -123,8 +123,7 @@
     // Fit only the current phrase. Exceptionally long lines may wrap, so they
     // do not force every short slogan to use a tiny shared font size.
     const fitCurrentPhrase = () => {
-      const titleRect = typewriter.getBoundingClientRect();
-      const availableWidth = Math.max(typewriter.clientWidth, document.documentElement.clientWidth - titleRect.left - 18);
+      const availableWidth = typewriter.clientWidth;
       const desiredSize = parseFloat(getComputedStyle(typewriter).fontSize);
       if (!availableWidth || !desiredSize || lines.length !== 2) return;
       lines.forEach((line, lineIndex) => {
@@ -146,7 +145,7 @@
         const measuredWidth = probe.getBoundingClientRect().width;
         probe.remove();
         const singleLineSize = desiredSize * (availableWidth - 4) / (measuredWidth + desiredSize * .12);
-        const minimumSize = Math.max(12, desiredSize * .42);
+        const minimumSize = Math.max(18, desiredSize * .42);
         const fittedSize = Math.min(desiredSize, Math.max(minimumSize, singleLineSize));
         line.style.fontSize = `${Math.floor(fittedSize * 100) / 100}px`;
         line.classList.toggle('is-wrapped', singleLineSize < minimumSize);
@@ -288,6 +287,20 @@
     const title = ostPlayer.querySelector('[data-ost-title]');
     const time = ostPlayer.querySelector('[data-ost-time]');
     const tracks = document.querySelectorAll('[data-ost-track]');
+    const status = document.createElement('p');
+    status.className = 'ost-player-status';
+    status.setAttribute('role', 'status');
+    status.hidden = true;
+    ostPlayer.after(status);
+    let currentTrack = null;
+    const clearStatus = () => {
+      status.textContent = '';
+      status.hidden = true;
+    };
+    const showPlaybackError = () => {
+      status.textContent = '音乐暂时无法播放，请稍后重试。';
+      status.hidden = false;
+    };
     const formatTime = seconds => {
       if (!Number.isFinite(seconds)) return '00:00';
       const minutes = Math.floor(seconds / 60);
@@ -295,39 +308,68 @@
       return `${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
     };
     const syncPlayer = () => {
-      const duration = audio.duration || 0;
+      const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
       progress.value = duration ? String((audio.currentTime / duration) * 100) : '0';
+      progress.setAttribute('aria-valuetext', `已播放 ${formatTime(audio.currentTime)}，共 ${formatTime(duration)}`);
       time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(duration)}`;
       playButton.querySelector('span').textContent = audio.paused ? '▶' : 'Ⅱ';
       playButton.setAttribute('aria-label', audio.paused ? '播放' : '暂停');
+      tracks.forEach(track => {
+        const selected = track === currentTrack;
+        const playing = selected && !audio.paused;
+        track.classList.toggle('is-active', selected);
+        if (selected) track.setAttribute('aria-current', 'true');
+        else track.removeAttribute('aria-current');
+        track.setAttribute('aria-label', `${playing ? '暂停' : '播放'} ${track.dataset.ostTitle || ''}`.trim());
+        const icon = track.querySelector('.ost-track-play');
+        if (icon) icon.textContent = playing ? 'Ⅱ' : '▶';
+      });
+    };
+    const playAudio = async () => {
+      const source = audio.getAttribute('src');
+      clearStatus();
+      try {
+        await audio.play();
+      } catch (error) {
+        if (error.name !== 'AbortError' && audio.getAttribute('src') === source) showPlaybackError();
+      }
+      syncPlayer();
     };
     const selectTrack = async (track, autoplay = false) => {
       const source = track.dataset.ostSrc;
       if (!source) return;
+      const wasPlaying = track === currentTrack && !audio.paused;
+      currentTrack = track;
       if (audio.getAttribute('src') !== source) {
+        clearStatus();
         audio.src = source;
         title.textContent = track.dataset.ostTitle || track.textContent.trim();
         playButton.disabled = false;
         progress.disabled = false;
-        tracks.forEach(item => item.classList.toggle('is-active', item === track));
       }
       if (autoplay) {
-        try { await audio.play(); } catch (error) {}
+        if (wasPlaying) audio.pause();
+        else await playAudio();
       }
       syncPlayer();
     };
     tracks.forEach(track => track.addEventListener('click', () => selectTrack(track, true)));
     playButton.addEventListener('click', () => {
       if (!audio.src) return;
-      if (audio.paused) audio.play().catch(() => {});
+      if (audio.paused) playAudio();
       else audio.pause();
     });
     progress.addEventListener('input', () => {
       if (audio.duration) audio.currentTime = audio.duration * Number(progress.value) / 100;
+      syncPlayer();
     });
     audio.addEventListener('timeupdate', syncPlayer);
     audio.addEventListener('loadedmetadata', syncPlayer);
-    audio.addEventListener('play', syncPlayer);
+    audio.addEventListener('play', () => {
+      clearStatus();
+      syncPlayer();
+    });
+    audio.addEventListener('error', showPlaybackError);
     audio.addEventListener('pause', syncPlayer);
     audio.addEventListener('ended', syncPlayer);
     if (tracks.length) selectTrack(tracks[0]);

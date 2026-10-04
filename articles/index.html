@@ -8,16 +8,23 @@
   <title>全部文章 · PaperEX</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../refresh.css">
+  <link rel="stylesheet" href="../subpages.css">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('paperex-theme')||'dark'}catch(e){}</script>
 </head>
-<body>
+<body id="top" class="subpage articles-view">
   <a class="skip-link" href="#archive-list">跳到文章列表</a>
   <header class="site-header article-header archive-header">
     <a class="brand" href="../index.html" aria-label="返回 PaperEX 首页">
       <span class="brand-mark" aria-hidden="true">P</span>
       <span>PaperEX</span>
     </a>
-    <a class="archive-home-link" href="../index.html#writing">返回首页</a>
+    <nav class="subpage-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../articles/" aria-current="page">文章</a>
+      <a href="../achievements/">成就</a>
+      <a href="../ost/">OST</a>
+    </nav>
     <div class="header-actions">
       <button class="icon-button theme-toggle" type="button" aria-label="切换明暗主题" title="切换主题" data-theme-toggle>
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
@@ -28,17 +35,20 @@
   <main class="archive-page">
     <header class="archive-hero reveal">
       <div>
-        <p class="kicker">Writing archive / 00</p>
         <h1>全部文章<span class="section-period">。</span></h1>
       </div>
-      <p class="archive-summary">从最近，到最早。<br>沿着时间往回读。</p>
+      <p class="archive-summary">按时间，记录想法。</p>
     </header>
 
     <div class="archive-list archive-empty reveal" id="archive-list" role="status">
-      <span aria-hidden="true">00</span>
-      <div><p>Waiting for the next story</p><h2>这里暂时还没有文章。</h2><p>下一次落笔，会从这里开始。</p></div>
+      <div><h2>新文章，准备中。</h2><p>写下的想法，会在这里慢慢积累。</p></div>
     </div>
   </main>
+
+  <footer class="subpage-footer">
+    <span>© <span data-year>2026</span> PaperEX</span>
+    <a href="../index.html">返回首页 ↗</a>
+  </footer>
 
   <script src="../app.js" defer></script>
 </body>
