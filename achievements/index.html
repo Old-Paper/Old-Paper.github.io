@@ -8,23 +8,16 @@
   <title>成就之墙 · PaperEX</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../refresh.css">
-  <link rel="stylesheet" href="../subpages.css">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('paperex-theme')||'dark'}catch(e){}</script>
 </head>
-<body id="top" class="subpage achievements-view">
+<body id="top">
   <a class="skip-link" href="#achievement-wall">跳到成就之墙</a>
   <header class="site-header article-header archive-header">
     <a class="brand" href="../index.html" aria-label="返回 PaperEX 首页">
       <span class="brand-mark" aria-hidden="true">P</span>
       <span>PaperEX</span>
     </a>
-    <nav class="subpage-nav" aria-label="主导航">
-      <a href="../index.html">首页</a>
-      <a href="../articles/">文章</a>
-      <a href="../achievements/" aria-current="page">成就</a>
-      <a href="../ost/">OST</a>
-    </nav>
+    <a class="archive-home-link" href="../index.html#now">返回我的成就</a>
     <div class="header-actions">
       <button class="icon-button theme-toggle" type="button" aria-label="切换明暗主题" title="切换主题" data-theme-toggle>
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
@@ -35,10 +28,12 @@
   <main class="achievement-page" data-social-root data-social-path="../data/social.json">
     <header class="achievement-hero reveal">
       <div>
+        <p class="kicker">Achievement wall / Live</p>
         <h1>成就之墙<span class="section-period">。</span></h1>
       </div>
       <div class="achievement-hero-copy">
         <span class="achievement-live" data-social-status>每小时同步</span>
+        <p>把已经走过的路留下来。<br>小小的数字，也是一段真实的旅程。</p>
       </div>
     </header>
 
@@ -54,7 +49,7 @@
         <small>位订阅者 ↗</small>
       </a>
       <a class="achievement-stat" href="https://github.com/Old-Paper?tab=repositories" target="_blank" rel="noreferrer">
-        <span>GitHub</span>
+        <span>Open source</span>
         <strong data-github-projects>7</strong>
         <small>个公开项目 ↗</small>
       </a>
@@ -62,21 +57,27 @@
 
     <section class="achievement-board" id="achievement-wall" aria-labelledby="achievement-board-title">
       <header class="achievement-board-heading reveal">
+        <p class="kicker">Milestones / 06</p>
         <h2 id="achievement-board-title">已经走过的路</h2>
       </header>
 
       <div class="achievement-grid">
         <article class="achievement-plaque achievement-growth reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">01</span>
           <span class="achievement-state"><i></i> 持续增长</span>
           <div class="achievement-plaque-copy">
+            <p>Account operation</p>
             <h3>双平台<br>创作者</h3>
             <p>在 Bilibili 与 YouTube 持续创作，让每一次更新都有回声。</p>
           </div>
+          <div class="achievement-orbit" aria-hidden="true"><span>B</span><span>Y</span></div>
         </article>
 
         <article class="achievement-plaque achievement-video-plaque reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">02</span>
           <span class="achievement-state"><i></i> 最近更新</span>
           <div class="achievement-plaque-copy">
+            <p>Video creation</p>
             <h3>把长片，<br>认真做完</h3>
           </div>
           <a class="achievement-video" href="https://www.youtube.com/watch?v=GRUpMJj9LJo" target="_blank" rel="noreferrer" data-latest-video>
@@ -86,6 +87,7 @@
         </article>
 
         <article class="achievement-plaque achievement-a-class reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">03</span>
           <a class="achievement-a-media" href="https://www.youtube.com/watch?v=YYPNeLb3gYc" target="_blank" rel="noreferrer" aria-label="观看《百日生存：收容失效》">
             <img src="https://i.ytimg.com/vi/YYPNeLb3gYc/maxresdefault.jpg" alt="《百日生存：收容失效》视频封面" width="1280" height="720" loading="lazy" decoding="async">
             <span>观看完整视频 ↗</span>
@@ -102,6 +104,7 @@
         </article>
 
         <article class="achievement-plaque achievement-viral reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">04</span>
           <a class="achievement-viral-media" href="https://www.youtube.com/watch?v=gOJZQK31vMI&amp;t=548s" target="_blank" rel="noreferrer" aria-label="观看《在孤岛我挑战丧尸惊变100天》">
             <img src="https://i.ytimg.com/vi/gOJZQK31vMI/maxresdefault.jpg" alt="《在孤岛我挑战丧尸惊变100天》视频封面" width="1280" height="720" loading="lazy" decoding="async">
             <span class="achievement-viral-badge"><strong>100K</strong><small>VIEWS</small></span>
@@ -109,6 +112,7 @@
           <div class="achievement-viral-copy">
             <span class="achievement-state"><i></i> 爆款达成</span>
             <div>
+              <p class="achievement-a-period">FIRST BREAKOUT VIDEO</p>
               <h3>人生中第一次爆款！<em>100K播放达成！</em></h3>
               <p>过去这一年，我迎来了人生中第一个真正属于自己的高光时刻。说实话，生活从来都不轻松——但正是通过创作视频，我找到了一种踏实感：我是一个对别人有价值的人！</p>
               <a class="achievement-viral-link" href="https://www.youtube.com/watch?v=gOJZQK31vMI&amp;t=548s" target="_blank" rel="noreferrer">观看视频 <span aria-hidden="true">↗</span></a>
@@ -117,8 +121,10 @@
         </article>
 
         <article class="achievement-plaque achievement-open-source reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">05</span>
           <span class="achievement-state"><i></i> 已开源</span>
           <div class="achievement-plaque-copy">
+            <p>Open source</p>
             <h3>把想法，<br>变成工具</h3>
             <p><span data-github-projects>7</span> 个公开项目，持续把好奇心落到现实里。</p>
           </div>
@@ -130,8 +136,11 @@
         </article>
 
         <article class="achievement-plaque achievement-future reveal">
+          <span class="achievement-plaque-index" aria-hidden="true">06</span>
           <span class="achievement-state"><i></i> 进行中</span>
+          <div class="achievement-future-mark" aria-hidden="true"><span>∞</span></div>
           <div class="achievement-plaque-copy">
+            <p>Next milestone</p>
             <h3>改变世界，<br><em>未完待续。</em></h3>
             <p>下一项成就，还在路上。</p>
           </div>
@@ -140,9 +149,10 @@
     </section>
   </main>
 
-  <footer class="subpage-footer">
-    <span>© <span data-year>2026</span> PaperEX</span>
-    <a href="#top">回到顶部 ↑</a>
+  <footer class="site-footer achievement-footer">
+    <div><a class="brand footer-brand" href="../index.html"><span class="brand-mark">P</span><span>PaperEX</span></a><p>每一步，都算数。</p></div>
+    <div class="footer-meta"><p>© <span data-year>2026</span> PaperEX</p><p>轻装构建 · 托管于 GitHub Pages</p></div>
+    <a class="back-top" href="#top" aria-label="返回顶部">↑</a>
   </footer>
 
   <script src="../app.js" defer></script>
